@@ -73,6 +73,29 @@ namespace Comicful.Pages
         {
             this.InitializeComponent();
             contentView.ZoomCompleted += ContentView_ZoomCompleted;
+            image1.PointerPressed += Image1_PointerPressed;
+        }
+
+        private void Image1_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            // Handle clicks based on pointer position in set percentage-based section
+            // First 10% = Previous page
+            // Last 20% = Next page
+            // Center (rest of the section) = Show/Hide Reader UI
+            var pointerXPosition = e.GetCurrentPoint(image1).Position.X;
+            var positionPercentage = (pointerXPosition / image1.ActualWidth) * 100;
+            if (positionPercentage <= 10)
+            {
+                GoToPage(ViewModel.CurrentPage - 1);
+            }
+            else if (positionPercentage <= 80)
+            {
+                Debug.WriteLine("Center");
+            }
+            else
+            {
+                GoToPage(ViewModel.CurrentPage + 1);
+            }
         }
 
         private void ContentView_ZoomCompleted(ScrollView sender, ScrollingZoomCompletedEventArgs args)
