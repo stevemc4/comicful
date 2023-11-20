@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Comicful.Pages.ReaderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Comicful.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    KeyboardAcceleratorPlacementMode="Hidden">
+    <Page.KeyboardAccelerators>
+        <KeyboardAccelerator
+            Key="Right"
+            Invoked="KeyboardAccelerator_Invoked"
+            Modifiers="None" />
+        <KeyboardAccelerator
+            Key="Left"
+            Invoked="KeyboardAccelerator_Invoked"
+            Modifiers="None" />
+    </Page.KeyboardAccelerators>
+    <Grid ColumnDefinitions="*" x:Name="container">
+        <StackPanel x:Name="loaderUI" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressRing IsActive="True" />
+            <TextBlock x:Name="loadingStatus" VerticalAlignment="Center" Margin="8,0,0,0" Style="{StaticResource BodyStrongTextBlockStyle}" />
+        </StackPanel>
+        <ScrollView ZoomMode="Enabled" x:Name="contentView" MinZoomFactor="1">
+            <Image x:Name="image1" Source="/Assets/Images/comic.png" Stretch="Uniform" Width="{Binding ActualHeight, ElementName=container}" Height="{Binding ActualHeight, ElementName=container}" />
+        </ScrollView>
+        <StackPanel Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="8" CornerRadius="4" Orientation="Horizontal">
+            <TextBlock Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" VerticalAlignment="Center" />
+            <TextBlock Text="/" VerticalAlignment="Center" />
+            <TextBlock Text="{x:Bind ViewModel.Reader.TotalPage, Mode=OneWay}" VerticalAlignment="Center" />
+            <Button x:Name="zoomOutButton" Margin="8,0,0,0" Click="zoomOutButton_Click" IsEnabled="False">
+                <FontIcon Glyph="&#xE71F;" />
+            </Button>
+            <Button x:Name="zoomInButton" Margin="4,0,0,0" Click="zoomInButton_Click">
+                <FontIcon Glyph="&#xE8A3;" />
+            </Button>
+            <Button x:Name="fitContent" Margin="4,0,0,0" Click="fitContent_Click">
+                <FontIcon Glyph="&#xE9A6;" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
