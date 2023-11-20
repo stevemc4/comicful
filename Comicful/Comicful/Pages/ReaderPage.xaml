@@ -27,9 +27,17 @@
             <Image x:Name="image1" Source="/Assets/Images/comic.png" Stretch="Uniform" Width="{Binding ActualHeight, ElementName=container}" Height="{Binding ActualHeight, ElementName=container}" />
         </ScrollView>
         <StackPanel Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="8" CornerRadius="4" Orientation="Horizontal">
-            <TextBlock Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" VerticalAlignment="Center" />
-            <TextBlock Text="/" VerticalAlignment="Center" />
-            <TextBlock Text="{x:Bind ViewModel.Reader.TotalPage, Mode=OneWay}" VerticalAlignment="Center" />
+            <Button x:Name="pageIndicator" Background="Transparent" Content="{x:Bind ViewModel.PageIndicator, Mode=OneWay}">
+                <Button.Flyout>
+                    <Flyout>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center">Go to page</TextBlock>
+                            <NumberBox x:Name="goToPageInput" LostFocus="goToPageInput_LostFocus" Value="{x:Bind ViewModel.CurrentPage, Mode=OneWay}" Margin="4,0,0,0" SpinButtonPlacementMode="Inline" SmallChange="1" LargeChange="10" Maximum="{x:Bind ViewModel.Reader.TotalPage, Mode=OneWay}" Minimum="1" />
+                            <Button Style="{StaticResource AccentButtonStyle}" x:Name="goToPageSubmit" Margin="8,0,0,0" Click="goToPageSubmit_Click" Content="Go" />
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
             <Button x:Name="zoomOutButton" Margin="8,0,0,0" Click="zoomOutButton_Click" IsEnabled="False">
                 <FontIcon Glyph="&#xE71F;" />
             </Button>

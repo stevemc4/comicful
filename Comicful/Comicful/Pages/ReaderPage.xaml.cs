@@ -25,19 +25,20 @@ namespace Comicful.Pages
     public sealed partial class ReaderPage : Page
     {
 
-        private class VM : INotifyPropertyChanged 
+        private class VM : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
 
             private Reader _reader;
-            public Reader Reader { 
+            public Reader Reader {
                 get { return _reader; }
                 set
                 {
                     _reader = value;
                     if (PropertyChanged != null)
                     {
-                        PropertyChanged(this, new PropertyChangedEventArgs("Reader"));
+                        PropertyChanged(this, new PropertyChangedEventArgs(nameof(Reader)));
+                        PropertyChanged(this, new PropertyChangedEventArgs(nameof(PageIndicator)));
                     }
                 }
             }
@@ -51,8 +52,17 @@ namespace Comicful.Pages
                     _currentPage = value;
                     if (PropertyChanged != null)
                     {
-                        PropertyChanged(this, new PropertyChangedEventArgs("CurrentPage"));
+                        PropertyChanged(this, new PropertyChangedEventArgs(nameof(CurrentPage)));
+                        PropertyChanged(this, new PropertyChangedEventArgs(nameof(PageIndicator)));
                     }
+                }
+            }
+
+            public string PageIndicator
+            {
+                get
+                {
+                    return String.Format("{0}/{1}", _currentPage, _reader?.TotalPage ?? 0);
                 }
             }
         }
@@ -154,6 +164,20 @@ namespace Comicful.Pages
             image1.Width = container.ActualWidth;
             image1.Height = container.ActualHeight;
             contentView.ZoomTo(1f, null);
+        }
+
+        private void goToPageInput_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (goToPageInput.Text == "")
+            {
+                goToPageInput.Value = ViewModel.CurrentPage;
+            }
+        }
+
+        private void goToPageSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            pageIndicator.Flyout.Hide();
+            GoToPage((int)goToPageInput.Value);
         }
     }
 }
