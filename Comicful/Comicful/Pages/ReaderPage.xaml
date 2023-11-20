@@ -26,7 +26,10 @@
         <ScrollView ZoomMode="Enabled" x:Name="contentView" MinZoomFactor="1" Visibility="Collapsed">
             <Image x:Name="image1" Source="/Assets/Images/comic.png" Stretch="Uniform" Width="{Binding ActualHeight, ElementName=container}" Height="{Binding ActualHeight, ElementName=container}" />
         </ScrollView>
-        <StackPanel x:Name="readerMenu" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="8" CornerRadius="4" Orientation="Horizontal" Visibility="Collapsed">
+        <StackPanel x:Name="readerMenu" Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="8" CornerRadius="4" Orientation="Horizontal" Translation="{x:Bind ViewModel.ShowReaderUI, Converter={StaticResource BooleanToBottomReaderUIVisibilityConverter}, Mode=OneWay}">
+            <StackPanel.TranslationTransition>
+                <Vector3Transition />
+            </StackPanel.TranslationTransition>
             <Button x:Name="pageIndicator" Background="Transparent" Content="{x:Bind ViewModel.PageIndicator, Mode=OneWay}">
                 <Button.Flyout>
                     <Flyout>

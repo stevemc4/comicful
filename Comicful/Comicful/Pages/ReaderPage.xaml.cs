@@ -31,7 +31,7 @@ namespace Comicful.Pages
 
             private Reader _reader;
             public Reader Reader {
-                get { return _reader; }
+                get => _reader;
                 set
                 {
                     _reader = value;
@@ -46,7 +46,7 @@ namespace Comicful.Pages
             private int _currentPage = 1;
             public int CurrentPage
             {
-                get { return _currentPage; }
+                get => _currentPage;
                 set
                 {
                     _currentPage = value;
@@ -63,6 +63,20 @@ namespace Comicful.Pages
                 get
                 {
                     return String.Format("{0}/{1}", _currentPage, _reader?.TotalPage ?? 0);
+                }
+            }
+
+            private bool _showReaderUI = false;
+            public bool ShowReaderUI
+            {
+                get => _showReaderUI;
+                set
+                {
+                    _showReaderUI = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs(nameof(ShowReaderUI)));
+                    }
                 }
             }
         }
@@ -90,7 +104,7 @@ namespace Comicful.Pages
             }
             else if (positionPercentage <= 80)
             {
-                Debug.WriteLine("Center");
+                ViewModel.ShowReaderUI = !ViewModel.ShowReaderUI;
             }
             else
             {
@@ -143,7 +157,7 @@ namespace Comicful.Pages
                 image1.Source = await reader.GetPageImage(0);
                 loaderUI.Visibility = Visibility.Collapsed;
                 contentView.Visibility = Visibility.Visible;
-                readerMenu.Visibility = Visibility.Visible;
+                ViewModel.ShowReaderUI = true;
             }
         }
 

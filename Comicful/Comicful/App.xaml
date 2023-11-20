@@ -3,15 +3,18 @@
     x:Class="Comicful.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Comicful">
+    xmlns:local="using:Comicful"
+    xmlns:converters="using:Comicful.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
-            <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
             <!-- Other app resources here -->
+            <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <converters:BooleanToBottomReaderUIVisibilityConverter x:Key="BooleanToBottomReaderUIVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
