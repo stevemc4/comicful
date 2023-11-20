@@ -119,6 +119,8 @@ namespace Comicful.Pages
                 ViewModel.Reader = reader;
                 image1.Source = await reader.GetPageImage(0);
                 loaderUI.Visibility = Visibility.Collapsed;
+                contentView.Visibility = Visibility.Visible;
+                readerMenu.Visibility = Visibility.Visible;
             }
         }
 
